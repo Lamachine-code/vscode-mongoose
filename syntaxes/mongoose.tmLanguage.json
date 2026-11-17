@@ -88,7 +88,7 @@
         },
         {
           "name": "support.function.builtin.mongoose",
-          "match": "\\\\b(?:print|length|substring|new_array|push|pop|keys|values|has_key)\\\\b(?=\\\\s*\\\\()"
+          "match": "\\b(?:print|length|substring|new_array|push|pop|keys|values|has_key)\\b(?=\\s*\\()"
         },
         {
           "name": "entity.name.function.call.mongoose",
