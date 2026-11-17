@@ -10,7 +10,7 @@ VS Code language support for the **Mongoose** programming language.
 - Lightweight IntelliSense: keyword/literal suggestions, built-in and locally declared function completions, and variables and function parameters visible in the current scope.
 - Hover documentation for language keywords, literals and built-in functions.
 - Go to Definition for visible variables and function parameters, plus functions in the workspace.
-- Live syntax and semantic diagnostics from `mongoose_check`, shown in the editor and Problems panel.
+- Live syntax and semantic diagnostics from `mongoose_check`, mapped to the exact line and column reported by the checker and shown in the editor and Problems panel.
 - Run the active `.snake` or `.mg` file with the configured Mongoose interpreter.
 - Built-in function completions and hover documentation for `print`, `length`, `substring`, `new_array`, `push`, `pop`, `keys`, `values` and `has_key`.
 - Snippets for variables, functions, conditions, loops, array literals, dictionary literals and operations.
@@ -32,7 +32,7 @@ Set `mongoose.interpreterPath` in VS Code Settings to the path of your Mongoose 
 
 ## Diagnostics
 
-The extension runs `mongoose_check` on the current Mongoose document after edits and when it is opened or saved. The default `mongoose.checkerPath` value is `mongoose_check`, so it is found automatically if it is on `PATH`; otherwise, set that setting to the full executable path. Diagnostics update as you type and are also listed in VS Code's **Problems** panel. If the checker cannot be started or returns unrecognized output, details are shown in the **Mongoose Checker** output channel.
+The extension runs `mongoose_check` on the current Mongoose document after edits and when it is opened or saved. The default `mongoose.checkerPath` value is `mongoose_check`, so it is found automatically if it is on `PATH`; otherwise, set that setting to the full executable path. Diagnostics update as you type and are also listed in VS Code's **Problems** panel. If the checker cannot be started or returns unrecognized output, actionable details are shown in the **Mongoose Checker** output channel. The diagnostic backend is isolated behind a provider interface, allowing a future LSP-backed implementation without changing the editor integration.
 
 ## Requirements
 

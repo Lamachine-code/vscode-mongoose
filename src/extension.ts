@@ -1,6 +1,7 @@
 import * as path from "path";
 import * as vscode from "vscode";
-import { parseCheckerOutput, runChecker } from "./checker";
+import { createCheckerDiagnosticProvider } from "./checker";
+import { toVscodeDiagnostics } from "./diagnostics";
 import { analyzeVariables, maskCommentsAndStrings, resolveVariable, visibleVariables } from "./symbols";
 
 const KEYWORDS = [
@@ -81,37 +82,19 @@ export function activate(context: vscode.ExtensionContext): void {
     const sourceExtension = extension === ".snake" || extension === ".mg" ? extension : ".mg";
 
     try {
-      const result = await runChecker(checkerPath, document.getText(), sourceExtension);
+      const provider = createCheckerDiagnosticProvider(checkerPath);
+      const result = await provider.validate({
+        source: document.getText(),
+        extension: sourceExtension
+      });
       if (validationIds.get(key) !== validationId || document.version !== version) return;
 
-      const parsed = parseCheckerOutput(result.output);
-      const editorDiagnostics = parsed.flatMap((entry) => {
-        if (entry.line > document.lineCount) return [];
-        const line = entry.line - 1;
-        const lineLength = document.lineAt(line).text.length;
-        let start = Math.min(entry.column - 1, lineLength);
-        if (start === lineLength && lineLength > 0) start--;
-        const range = new vscode.Range(
-          line,
-          start,
-          line,
-          Math.min(start + 1, lineLength)
-        );
-        const severity = entry.severity === "warning"
-          ? vscode.DiagnosticSeverity.Warning
-          : entry.severity === "information"
-            ? vscode.DiagnosticSeverity.Information
-            : vscode.DiagnosticSeverity.Error;
-        const diagnostic = new vscode.Diagnostic(range, entry.message, severity);
-        diagnostic.source = "mongoose_check";
-        return [diagnostic];
-      });
-
+      const editorDiagnostics = toVscodeDiagnostics(result.diagnostics, document);
       diagnostics.set(document.uri, editorDiagnostics);
       checkerFailureShown = false;
-      if (result.exitCode !== 0 && editorDiagnostics.length === 0) {
+      if (result.exitCode !== 0 && result.diagnostics.length === 0) {
         reportCheckerFailure(`mongoose_check exited with code ${result.exitCode}.${result.output ? `\n${result.output}` : ""}`);
-      } else if (result.output.trim() && parsed.length === 0) {
+      } else if (result.output.trim() && result.diagnostics.length === 0) {
         checkerOutput.appendLine(result.output.trim());
       }
     } catch (error) {

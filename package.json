@@ -100,7 +100,7 @@
     "watch": "tsc -watch -p ./",
     "vscode:prepublish": "npm run compile",
     "package": "vsce package",
-    "test": "npm run compile && node --test tests/symbols.test.cjs"
+    "test": "npm run compile && node --test tests/symbols.test.cjs tests/checker.test.cjs"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
