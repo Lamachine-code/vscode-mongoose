@@ -1,6 +1,6 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
-const { parseCheckerOutput } = require("../out/checker.js");
+const { parseCheckerOutput, byteColumnToUtf16Character } = require("../out/checker.js");
 
 test("parses the checker's current path:line:column diagnostic format", () => {
   const diagnostics = parseCheckerOutput(
@@ -50,4 +50,21 @@ test("ignores non-diagnostic output and invalid positions", () => {
 
   assert.equal(diagnostics.length, 1);
   assert.equal(diagnostics[0].message, "valid diagnostic");
+});
+
+test("converts UTF-8 byte columns to VS Code UTF-16 character positions", () => {
+  const line = 'let label = "é🐍"; missing';
+  const prefix = line.slice(0, line.indexOf("missing"));
+  const byteColumn = Buffer.byteLength(prefix, "utf8") + 1;
+
+  assert.equal(
+    byteColumnToUtf16Character(`first line\\n${line}`, 2, byteColumn),
+    prefix.length
+  );
+});
+
+test("keeps ASCII columns unchanged and clamps columns beyond the line", () => {
+  assert.equal(byteColumnToUtf16Character("print(missing)", 1, 7), 6);
+  assert.equal(byteColumnToUtf16Character("abc", 1, 99), 3);
+  assert.equal(byteColumnToUtf16Character("abc", 0, 1), 0);
 });
