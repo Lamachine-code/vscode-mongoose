@@ -25,9 +25,13 @@ test("built-in functions use valid word-boundary regexes and are highlighted bef
 });
 
 test("keywords, literals, numbers and operators retain syntax highlighting rules", () => {
-  assert.match(pattern("keywords").match, /\\\\b/);
-  assert.match(pattern("constants").patterns[0].match, /true\|false/);
-  assert.match(pattern("numbers").match, /\\\\d/);
+  const keywordRegex = new RegExp(pattern("keywords").match);
+  assert.equal(keywordRegex.test("let"), true);
+  assert.equal(keywordRegex.test("letter"), false);
+  const constantRegexes = pattern("constants").patterns.map((entry) => new RegExp(entry.match));
+  assert.equal(constantRegexes.some((regex) => regex.test("true")), true);
+  assert.equal(constantRegexes.some((regex) => regex.test("nil")), true);
+  assert.equal(new RegExp(pattern("numbers").match).test("123.45"), true);
   const operators = pattern("operators").match;
   for (const operator of ["//", "%", "\\^", "\\+", "=="]) {
     assert.ok(operators.includes(operator), `Missing operator token: ${operator}`);
