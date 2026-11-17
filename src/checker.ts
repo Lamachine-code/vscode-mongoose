@@ -100,7 +100,7 @@ export function byteColumnToUtf16Character(source: string, line: number, byteCol
   if (!Number.isSafeInteger(line) || line < 1 ||
       !Number.isSafeInteger(byteColumn) || byteColumn < 1) return 0;
 
-  const lineText = (source.split(/\\r?\\n/)[line - 1] ?? "").replace(/\\r$/, "");
+  const lineText = (source.split(/\r?\n/)[line - 1] ?? "").replace(/\r$/, "");
   const byteOffset = Math.min(byteColumn - 1, Buffer.byteLength(lineText, "utf8"));
   return Buffer.from(lineText, "utf8").subarray(0, byteOffset).toString("utf8").length;
 }
