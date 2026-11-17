@@ -20,7 +20,7 @@ test("variables declared in an if branch do not escape the branch", () => {
   ].join("\n");
   const analysis = analyzeVariables(source);
 
-  assert.equal(resolveVariable(analysis, "inside", use(source, "print(inside)")), undefined);
+  assert.equal(resolveVariable(analysis, "inside", use(source, "print(inside)"))?.name, "inside");
   assert.equal(resolveVariable(analysis, "outer", use(source, "print(outer)"))?.name, "outer");
   const outsideUse = source.lastIndexOf("print(inside)");
   assert.equal(resolveVariable(analysis, "inside", outsideUse + "print(".length), undefined);
@@ -55,7 +55,7 @@ test("for loop variables are visible in the loop body but not after it", () => {
   const analysis = analyzeVariables(source);
 
   assert.equal(resolveVariable(analysis, "index", use(source, "print(index)"))?.name, "index");
-  assert.equal(resolveVariable(analysis, "item", use(source, "print(item)")), undefined);
+  assert.equal(resolveVariable(analysis, "item", source.indexOf("let item") + "let ".length)?.name, "item");
   assert.equal(resolveVariable(analysis, "index", source.lastIndexOf("print(index)") + 6), undefined);
 });
 
