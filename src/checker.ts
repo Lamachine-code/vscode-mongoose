@@ -92,16 +92,35 @@ export async function runChecker(
   }
 }
 
+/**
+ * mongoose_check currently reports columns counted as UTF-8 bytes by its C lexer.
+ * VS Code positions count UTF-16 code units, so convert before creating ranges.
+ */
+export function byteColumnToUtf16Character(source: string, line: number, byteColumn: number): number {
+  if (!Number.isSafeInteger(line) || line < 1 ||
+      !Number.isSafeInteger(byteColumn) || byteColumn < 1) return 0;
+
+  const lineText = (source.split(/\\r?\\n/)[line - 1] ?? "").replace(/\\r$/, "");
+  const byteOffset = Math.min(byteColumn - 1, Buffer.byteLength(lineText, "utf8"));
+  return Buffer.from(lineText, "utf8").subarray(0, byteOffset).toString("utf8").length;
+}
+
 export function createCheckerDiagnosticProvider(executable: string): DiagnosticProvider {
   return {
     async validate(request): Promise<DiagnosticProviderResult> {
       const result = await runChecker(executable, request.source, request.extension);
       const diagnostics: LanguageDiagnostic[] = parseCheckerOutput(result.output).map((entry) => ({
         range: {
-          start: { line: entry.line - 1, character: entry.column - 1 },
-          // mongoose_check currently reports a start position, not a token span.
-          // A one-character range is used until the checker exposes end positions.
-          end: { line: entry.line - 1, character: entry.column }
+          start: {
+            line: entry.line - 1,
+            character: byteColumnToUtf16Character(request.source, entry.line, entry.column)
+          },
+          // mongoose_check reports a start position, not a token span.
+          // Highlight one UTF-16 code unit until the checker exposes end positions.
+          end: {
+            line: entry.line - 1,
+            character: byteColumnToUtf16Character(request.source, entry.line, entry.column) + 1
+          }
         },
         message: entry.message,
         severity: entry.severity,
