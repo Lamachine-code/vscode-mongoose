@@ -10,11 +10,14 @@ const KEYWORDS = [
 
 const BUILTINS: Array<{ name: string; signature: string; detail: string }> = [
   { name: "print", signature: "print(value)", detail: "Write a value to the program output." },
-  { name: "length", signature: "length(value)", detail: "Return the length of a string or array." },
-  { name: "substring", signature: "substring(string, start, length)", detail: "Return a substring." },
+  { name: "length", signature: "length(value)", detail: "Return the number of UTF-8 code points in a string, elements in an array, or distinct keys in a dictionary." },
+  { name: "substring", signature: "substring(string, start, length)", detail: "Extract a range of UTF-8 code points from a string using zero-based indices." },
   { name: "new_array", signature: "new_array()", detail: "Create an empty array." },
-  { name: "push", signature: "push(array, value)", detail: "Append a value to an array." },
-  { name: "pop", signature: "pop(array)", detail: "Remove and return the last array element." }
+  { name: "push", signature: "push(array, value)", detail: "Append a value to an array and return its new length." },
+  { name: "pop", signature: "pop(array)", detail: "Remove and return the last array element, or nil when the array is empty." },
+  { name: "keys", signature: "keys(dictionary)", detail: "Return an array of dictionary keys in insertion order." },
+  { name: "values", signature: "values(dictionary)", detail: "Return an array of dictionary values in insertion order." },
+  { name: "has_key", signature: "has_key(dictionary, key)", detail: "Return whether a dictionary contains the given string key." }
 ];
 
 function findDeclarationOffsets(source: string, keyword: "let" | "function", name: string): number[] {

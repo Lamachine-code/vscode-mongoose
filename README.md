@@ -5,15 +5,18 @@ VS Code language support for the **Mongoose** programming language.
 ## Features
 
 - TextMate syntax highlighting for `.snake` source files and optional `.mg` files.
-- `//`, `#` and `/* ... */` comments, double-quoted strings, numbers, booleans and `nil`.
+- `#` line comments and context-sensitive `//` (line comment at the start of a line, floor division inside expressions), double-quoted strings, numbers, booleans and `nil`.
 - Highlighting for Mongoose control-flow and declaration keywords.
 - Lightweight IntelliSense: keyword/literal suggestions, built-in and locally declared function completions, and variables and function parameters visible in the current scope.
 - Hover documentation for language keywords, literals and built-in functions.
 - Go to Definition for visible variables and function parameters, plus functions in the workspace.
 - Live syntax and semantic diagnostics from `mongoose_check`, shown in the editor and Problems panel.
 - Run the active `.snake` or `.mg` file with the configured Mongoose interpreter.
-- Snippets for variables, functions, conditions, loops, comments and array operations.
+- Built-in function completions and hover documentation for `print`, `length`, `substring`, `new_array`, `push`, `pop`, `keys`, `values` and `has_key`.
+- Snippets for variables, functions, conditions, loops, array literals, dictionary literals and operations.
 - No external language server or Mongoose runtime is required for editor features; running files requires the Mongoose interpreter.
+
+The current built-ins include `length` for strings, arrays and dictionaries; `push` and `pop` for arrays; and `keys`, `values` and `has_key` for dictionaries. Dictionary keys and values preserve insertion order. Arrays and dictionaries are reference values and support nested indexing.
 
 ## File extensions
 
@@ -93,7 +96,7 @@ code --install-extension mongoose-language-support-0.1.0.vsix
 
 This is a lightweight editor integration, not a full Language Server Protocol implementation. Completions and variable navigation recognize top-level `let` declarations, function-local `let` declarations and function parameters; nested function scopes and variable shadowing are supported. Variable visibility is not resolved at the level of `if`, `while` or `for` blocks. Function navigation searches `.snake` and `.mg` files in the workspace. The extension does not implement a full parser or type checker; syntax and semantic diagnostics are provided by the separately installed `mongoose_check` executable.
 
-The grammar follows the syntax currently used by the Mongoose project, including `function name(...) ... stop`, `if condition then ... stop`, `while condition do ... stop`, and `for i = start to end do ... stop`.
+The grammar follows the current frontend grammar documented in [`Mongoose/docs/LANGUAGE_GRAMMAR.md`](https://github.com/Lamachine-code/Mongoose/blob/development/ai/docs/LANGUAGE_GRAMMAR.md). It includes array literals (`[1, 2]`), dictionary literals (`[\"name\": \"Alice\"]` and `[:]`), chained indexing, exponentiation (`^`), modulo (`%`) and floor division (`//`). A `//` comment is recognized only when it is the first non-whitespace text on a line; `#` is the unambiguous line-comment form. `function name(...) ... stop`, `if condition then ... stop`, `while condition do ... stop`, and inclusive `for i = start to end do ... stop` are supported.
 
 ## License
 

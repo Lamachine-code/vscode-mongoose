@@ -26,6 +26,9 @@
     },
     {
       "include": "#variables"
+    },
+    {
+      "include": "#punctuation"
     }
   ],
   "repository": {
@@ -38,11 +41,6 @@
         {
           "name": "comment.line.htag.mongoose",
           "match": "#.*$"
-        },
-        {
-          "name": "comment.block.mongoose",
-          "begin": "/\\*",
-          "end": "\\*/"
         }
       ]
     },
@@ -90,7 +88,7 @@
         },
         {
           "name": "support.function.builtin.mongoose",
-          "match": "\\b(?:print|length|substring|new_array|push|pop)\\b(?=\\s*\\()"
+          "match": "\\\\b(?:print|length|substring|new_array|push|pop|keys|values|has_key)\\\\b(?=\\\\s*\\\\()"
         },
         {
           "name": "entity.name.function.call.mongoose",
@@ -100,13 +98,21 @@
     },
     "operators": {
       "name": "keyword.operator.mongoose",
-      "match": "==|!=|<=|>=|=|<|>|\\+|-|\\*|/|%|\\^"
+      "match": "//|==|!=|<=|>=|=|<|>|\\+|-|\\*|/|%|\\^"
     },
     "variables": {
       "patterns": [
         {
           "name": "variable.other.mongoose",
           "match": "\\b[A-Za-z_][A-Za-z0-9_]*\\b"
+        }
+      ]
+    },
+    "punctuation": {
+      "patterns": [
+        {
+          "name": "punctuation.separator.mongoose",
+          "match": "\\[|\\]|\\(|\\)|,|:"
         }
       ]
     }

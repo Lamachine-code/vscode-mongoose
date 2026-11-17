@@ -78,8 +78,64 @@
   "Comment": {
     "prefix": "comment",
     "body": [
-      "// ${1:comment}"
+      "# ${1:comment}"
     ],
     "description": "Line comment"
+  },
+  "Array literal": {
+    "prefix": "array",
+    "body": [
+      "[${1:first}, ${2:second}]"
+    ],
+    "description": "Create an array literal"
+  },
+  "Empty array": {
+    "prefix": "emptyarray",
+    "body": [
+      "[]"
+    ],
+    "description": "Create an empty array literal"
+  },
+  "Dictionary literal": {
+    "prefix": "dict",
+    "body": [
+      "[\"${1:key}\": ${2:value}]"
+    ],
+    "description": "Create a dictionary with a string key"
+  },
+  "Empty dictionary": {
+    "prefix": "emptydict",
+    "body": [
+      "[:]"
+    ],
+    "description": "Create an empty dictionary"
+  },
+  "Dictionary lookup": {
+    "prefix": "dictget",
+    "body": [
+      "${1:dictionary}[\"${2:key}\"]"
+    ],
+    "description": "Read a value by dictionary key"
+  },
+  "Dictionary membership": {
+    "prefix": "haskey",
+    "body": [
+      "has_key(${1:dictionary}, \"${2:key}\")"
+    ],
+    "description": "Check whether a dictionary contains a key"
+  },
+  "Dictionary keys": {
+    "prefix": "dictkeys",
+    "body": [
+      "keys(${1:dictionary})"
+    ],
+    "description": "Get dictionary keys in insertion order"
+  },
+  "Dictionary values": {
+    "prefix": "dictvalues",
+    "body": [
+      "values(${1:dictionary})"
+    ],
+    "description": "Get dictionary values in insertion order"
   }
 }

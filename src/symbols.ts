@@ -19,7 +19,7 @@ export interface VariableAnalysis {
 
 export function maskCommentsAndStrings(source: string): string {
   return source.replace(
-    /"(?:\\.|[^"\\])*(?:"|$)|\/\*[\s\S]*?(?:\*\/|$)|\/\/[^\r\n]*|#[^\r\n]*/g,
+    /"(?:\\.|[^"\\])*(?:"|$)|^[ \t]*\/\/[^\r\n]*|#[^\r\n]*/gm,
     (match) => match.replace(/[^\r\n]/g, " ")
   );
 }
