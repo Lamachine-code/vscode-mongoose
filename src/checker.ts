@@ -45,7 +45,7 @@ export function parseCheckerOutput(output: string): CheckerDiagnostic[] {
   return diagnostics;
 }
 
-function describeExecutionError(error: Error & { code?: number | string }, output: string): Error {
+function describeExecutionError(error: Error & { code?: number | string | null }, output: string): Error {
   const details = output.trim();
   const suffix = details ? `\n${details}` : "";
 
