@@ -52,8 +52,13 @@ The extension runs `mongoose_check` on the current Mongoose document after edits
    ```bash
    npm run compile
    ```
-4. Press **F5** in VS Code. A new Extension Development Host window opens.
-5. Create or open a `.snake` (or `.mg`) file and try the syntax highlighting, completions and snippets.
+4. Run the symbol-scope regression tests:
+
+   ```bash
+   npm test
+   ```
+5. Press **F5** in VS Code. A new Extension Development Host window opens.
+6. Create or open a `.snake` (or `.mg`) file and try the syntax highlighting, completions and snippets.
 
 Use `Ctrl+Space` to trigger completions. Type a snippet prefix such as `ifelse`, `while`, `for`, `function` or `newarray`, then press `Tab`.
 
@@ -84,6 +89,8 @@ code --install-extension mongoose-language-support-0.1.0.vsix
 │   └── mongoose.tmLanguage.json
 ├── snippets/
 │   └── mongoose.json
+├── tests/
+│   └── symbols.test.cjs
 ├── themes/
 │   └── mongoose-icon-theme.json
 └── src/
