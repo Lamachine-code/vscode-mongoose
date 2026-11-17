@@ -58,7 +58,7 @@ test("converts UTF-8 byte columns to VS Code UTF-16 character positions", () => 
   const byteColumn = Buffer.byteLength(prefix, "utf8") + 1;
 
   assert.equal(
-    byteColumnToUtf16Character(`first line\n${line}\`, 2, byteColumn),
+    byteColumnToUtf16Character("first line\n" + line, 2, byteColumn),
     prefix.length
   );
 });
