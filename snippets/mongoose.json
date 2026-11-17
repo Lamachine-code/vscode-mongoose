@@ -1,0 +1,85 @@
+{
+  "Variable declaration": {
+    "prefix": "let",
+    "body": [
+      "let ${1:name} = ${2:value}"
+    ],
+    "description": "Declare a variable"
+  },
+  "If / else": {
+    "prefix": "ifelse",
+    "body": [
+      "if ${1:condition} then",
+      "\t${2:// statements}",
+      "else",
+      "\t${3:// statements}",
+      "stop"
+    ],
+    "description": "Conditional with an else branch"
+  },
+  "If": {
+    "prefix": "if",
+    "body": [
+      "if ${1:condition} then",
+      "\t${2:// statements}",
+      "stop"
+    ],
+    "description": "Conditional block"
+  },
+  "While loop": {
+    "prefix": "while",
+    "body": [
+      "while ${1:condition} do",
+      "\t${2:// statements}",
+      "stop"
+    ],
+    "description": "While loop"
+  },
+  "For loop": {
+    "prefix": "for",
+    "body": [
+      "for ${1:i} = ${2:0} to ${3:10} do",
+      "\t${4:// statements}",
+      "stop"
+    ],
+    "description": "Inclusive for loop"
+  },
+  "Function declaration": {
+    "prefix": "function",
+    "body": [
+      "function ${1:name}(${2:parameters})",
+      "\t${3:// statements}",
+      "\treturn ${4:nil}",
+      "stop"
+    ],
+    "description": "Declare a Mongoose function"
+  },
+  "Print": {
+    "prefix": "print",
+    "body": [
+      "print(${1:value})"
+    ],
+    "description": "Print a value"
+  },
+  "Array creation": {
+    "prefix": "newarray",
+    "body": [
+      "let ${1:items} = new_array()"
+    ],
+    "description": "Create an array"
+  },
+  "Array push": {
+    "prefix": "push",
+    "body": [
+      "push(${1:array}, ${2:value})"
+    ],
+    "description": "Append a value to an array"
+  },
+  "Comment": {
+    "prefix": "comment",
+    "body": [
+      "// ${1:comment}"
+    ],
+    "description": "Line comment"
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Mongoose",
+  "scopeName": "source.mongoose",
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#strings"
+    },
+    {
+      "include": "#numbers"
+    },
+    {
+      "include": "#constants"
+    },
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#functions"
+    },
+    {
+      "include": "#operators"
+    },
+    {
+      "include": "#variables"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.mongoose",
+          "match": "^\\s*//.*$"
+        },
+        {
+          "name": "comment.line.htag.mongoose",
+          "match": "#.*$"
+        },
+        {
+          "name": "comment.block.mongoose",
+          "begin": "/\\*",
+          "end": "\\*/"
+        }
+      ]
+    },
+    "strings": {
+      "name": "string.quoted.double.mongoose",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.mongoose",
+          "match": "\\\\."
+        }
+      ]
+    },
+    "numbers": {
+      "name": "constant.numeric.mongoose",
+      "match": "\\b\\d+(?:\\.\\d+)?\\b"
+    },
+    "constants": {
+      "patterns": [
+        {
+          "name": "constant.language.boolean.mongoose",
+          "match": "\\b(?:true|false)\\b"
+        },
+        {
+          "name": "constant.language.nil.mongoose",
+          "match": "\\bnil\\b"
+        }
+      ]
+    },
+    "keywords": {
+      "name": "keyword.control.mongoose",
+      "match": "\\b(?:let|function|return|if|then|else|stop|while|do|for|to|break|continue|and|or|not)\\b"
+    },
+    "functions": {
+      "patterns": [
+        {
+          "name": "entity.name.function.mongoose",
+          "match": "\\bfunction\\s+([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "entity.name.function.mongoose"
+            }
+          }
+        },
+        {
+          "name": "support.function.builtin.mongoose",
+          "match": "\\b(?:print|length|substring|new_array|push|pop)\\b(?=\\s*\\()"
+        },
+        {
+          "name": "entity.name.function.call.mongoose",
+          "match": "\\b[A-Za-z_][A-Za-z0-9_]*(?=\\s*\\()"
+        }
+      ]
+    },
+    "operators": {
+      "name": "keyword.operator.mongoose",
+      "match": "==|!=|<=|>=|=|<|>|\\+|-|\\*|/|%|\\^"
+    },
+    "variables": {
+      "patterns": [
+        {
+          "name": "variable.other.mongoose",
+          "match": "\\b[A-Za-z_][A-Za-z0-9_]*\\b"
+        }
+      ]
+    }
+  }
+}

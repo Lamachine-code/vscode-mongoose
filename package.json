@@ -1,0 +1,110 @@
+{
+  "name": "mongoose-language-support",
+  "displayName": "Mongoose Language Support",
+  "description": "Syntax highlighting, snippets and lightweight IntelliSense for the Mongoose programming language.",
+  "version": "0.1.0",
+  "publisher": "lamachine-code",
+  "icon": "assets/mongoose-logo.png",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets"
+  ],
+  "keywords": [
+    "mongoose",
+    "language",
+    "snippets"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onLanguage:mongoose",
+    "onCommand:mongoose.runFile"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "mongoose",
+        "aliases": [
+          "Mongoose",
+          "mongoose"
+        ],
+        "extensions": [
+          ".snake",
+          ".mg"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "mongoose",
+        "scopeName": "source.mongoose",
+        "path": "./syntaxes/mongoose.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "mongoose",
+        "path": "./snippets/mongoose.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "mongoose.runFile",
+        "title": "Mongoose: Run Current File",
+        "icon": "$(play)"
+      }
+    ],
+    "menus": {
+      "editor/title/run": [
+        {
+          "command": "mongoose.runFile",
+          "when": "resourceLangId == mongoose",
+          "group": "navigation"
+        }
+      ]
+    },
+    "iconThemes": [
+      {
+        "id": "mongoose-file-icons",
+        "label": "Seti + Mongoose",
+        "path": "./themes/mongoose-icon-theme.json"
+      }
+    ],
+    "configuration": {
+      "title": "Mongoose",
+      "properties": {
+        "mongoose.suggestBuiltins": {
+          "type": "boolean",
+          "default": true,
+          "description": "Suggest Mongoose keywords and built-in functions."
+        },
+        "mongoose.interpreterPath": {
+          "type": "string",
+          "default": "mongoose",
+          "description": "Path to the Mongoose interpreter executable."
+        },
+        "mongoose.checkerPath": {
+          "type": "string",
+          "default": "mongoose_check",
+          "description": "Path or command name of the Mongoose syntax checker."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "vscode:prepublish": "npm run compile",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^2.26.0",
+    "typescript": "^5.3.3"
+  }
+}
